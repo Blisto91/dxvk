@@ -291,6 +291,14 @@ namespace dxvk {
       deviceProp.vendorID = uint16_t(DxvkGpuVendor::Amd);
       deviceProp.deviceID = 0x67df; /* RX 480 */
     }
+
+    // Intel workaround for XeSS and Unreal Engine 4 games
+    if (options->customVendorId < 0 && options->customDeviceId < 0
+     && options->intelVendorHack && deviceProp.vendorID == uint16_t(DxvkGpuVendor::Intel)) {
+      Logger::info("DXGI: Intel vendor id workaround enabled, reporting AMD GPU");
+      deviceProp.vendorID = uint16_t(DxvkGpuVendor::Amd);
+      deviceProp.deviceID = 0x67df; /* RX 480 */
+    }
     
     // Convert device name
     std::memset(pDesc->Description, 0, sizeof(pDesc->Description));

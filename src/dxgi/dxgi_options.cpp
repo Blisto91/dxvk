@@ -79,6 +79,11 @@ namespace dxvk {
     else
       this->nvapiHack = config.getOption<bool>("dxgi.nvapiHack", true);
 
+    if (env::getEnvVar("DXVK_HIDE_INTEL_GPU") == "0")
+      this->intelVendorHack = false;
+    else
+      this->intelVendorHack = config.getOption<bool>("dxgi.intelVendorHack", true);
+
     this->enableHDR = config.getOption<bool>("dxgi.enableHDR", env::getEnvVar("DXVK_HDR") == "1");
     if (this->enableHDR && isHDRDisallowed()) {
       Logger::info("HDR was configured to be enabled, but has been force disabled as a UE4 DX11 game was detected.");

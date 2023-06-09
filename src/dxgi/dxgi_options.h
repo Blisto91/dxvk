@@ -36,6 +36,9 @@ namespace dxvk {
     /// Enables nvapi workaround
     bool nvapiHack;
 
+    /// Enables Intel vendor id workaround
+    bool intelVendorHack;
+
     /// Enable HDR
     bool enableHDR;
   };
