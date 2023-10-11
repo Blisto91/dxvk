@@ -970,6 +970,17 @@ namespace dxvk {
     void TouchMappedTexture(D3D9CommonTexture* pTexture);
     void RemoveMappedTexture(D3D9CommonTexture* pTexture);
 
+    bool IsD3D8Compatible() const {
+      return m_isD3D8Compatible;
+    }
+
+    void SetD3D8CompatibilityMode(bool compatMode) {
+      if (compatMode)
+        Logger::info("The D3D9 device is now operating in D3D8 compatibility mode.");
+
+      m_isD3D8Compatible = compatMode;
+    }
+
     // Device Lost
     bool IsDeviceLost() const {
       return m_deviceLostState != D3D9DeviceLostState::Ok;
@@ -1022,6 +1033,12 @@ namespace dxvk {
     bool CanSWVP() const {
       return m_behaviorFlags & (D3DCREATE_MIXED_VERTEXPROCESSING | D3DCREATE_SOFTWARE_VERTEXPROCESSING);
     }
+
+    // Device Reset detection for D3D9SwapChainEx::Present
+    bool IsDeviceReset() {
+      return std::exchange(m_deviceHasBeenReset, false);
+    }
+
     void DetermineConstantLayouts(bool canSWVP);
 
     D3D9BufferSlice AllocUPBuffer(VkDeviceSize size);
@@ -1318,13 +1335,15 @@ namespace dxvk {
     D3D9ShaderMasks                 m_psShaderMasks = FixedFunctionMask;
 
     bool                            m_isSWVP;
-    bool                            m_amdATOC         = false;
-    bool                            m_nvATOC          = false;
-    bool                            m_ffZTest         = false;
+    bool                            m_isD3D8Compatible = false;
+    bool                            m_amdATOC          = false;
+    bool                            m_nvATOC           = false;
+    bool                            m_ffZTest          = false;
     
     VkImageLayout                   m_hazardLayout = VK_IMAGE_LAYOUT_GENERAL;
 
     bool                            m_usingGraphicsPipelines = false;
+    bool                            m_deviceHasBeenReset = false;
 
     DxvkDepthBiasRepresentation     m_depthBiasRepresentation = { VK_DEPTH_BIAS_REPRESENTATION_LEAST_REPRESENTABLE_VALUE_FORMAT_EXT, false };
     float                           m_depthBiasScale  = 0.0f;
