@@ -19,7 +19,14 @@ namespace dxvk {
 
   DxvkInstance::DxvkInstance(const DxvkInstanceImportInfo& args, DxvkInstanceFlags flags) {
     Logger::info(str::format("Game: ", env::getExeName()));
-    Logger::info(str::format("DXVK: ", DXVK_VERSION));
+    
+    #if defined(_MSC_VER)
+      Logger::info(str::format("DXVK: ", DXVK_VERSION, " MSVC" ));
+    #elif defined(__MINGW32__) || (__MINGW64__)
+      Logger::info(str::format("DXVK: ", DXVK_VERSION, " MinGW-w64" ));
+    #else 
+      Logger::info(str::format("DXVK: ", DXVK_VERSION, " other" ));
+
 
     wsi::init();
 
