@@ -25,8 +25,8 @@ namespace dxvk {
     #elif defined(__MINGW32__) || (__MINGW64__)
       Logger::info(str::format("DXVK: ", DXVK_VERSION, " MinGW-w64" ));
     #else 
-      Logger::info(str::format("DXVK: ", DXVK_VERSION, " other" ));
-
+      Logger::info(str::format("DXVK: ", DXVK_VERSION, " Unknown" ));
+    #endif
 
     wsi::init();
 
