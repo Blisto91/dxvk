@@ -5,7 +5,7 @@ dxvk_is_msvc = cpp.get_argument_syntax() == 'msvc'
 if not dxvk_is_msvc
   project('dxvk', ['c', 'cpp'], version : 'v2.4.1', meson_version : '>= 0.58', default_options : [ 'cpp_std=c++17', 'warning_level=2' ])
 else
-  project('dxvk', ['c', 'cpp'], version : 'v2.4.1', meson_version : '>= 0.58', default_options : [ 'cpp_std=c++17', 'warning_level=2' ])
+  project('dxvk', ['c', 'cpp'], version : 'v2.4.1', meson_version : '>= 0.58', default_options : [ 'cpp_std=c++17', 'warning_level=1' ])
 endif
 
 pkg = import('pkgconfig')
@@ -14,7 +14,7 @@ platform   = target_machine.system()
 fs = import('fs')
 
 compiler_args = [
-     '-msse',
+  '-msse',
   '-msse2',
   '-msse3',
   '-mfpmath=sse',
@@ -94,7 +94,8 @@ if platform == 'windows'
     # setup file alignment + enable PDB output for MSVC builds
     # PDBs are useful for Windows consumers of DXVK 
     compiler_args += [
-	  '/Z7'
+	  '/Z7',
+	  '/wd4099',
 	]
     link_args += [
       '/FILEALIGN:4096',
