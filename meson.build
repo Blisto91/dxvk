@@ -1,16 +1,20 @@
-project('dxvk', ['c', 'cpp'], version : 'v2.4.1', meson_version : '>= 0.58', default_options : [ 'cpp_std=c++17', 'warning_level=2' ])
+cpp = meson.get_compiler('cpp')
+cc = meson.get_compiler('c')
+dxvk_is_msvc = cpp.get_argument_syntax() == 'msvc'
+
+if not dxvk_is_msvc
+  project('dxvk', ['c', 'cpp'], version : 'v2.4.1', meson_version : '>= 0.58', default_options : [ 'cpp_std=c++17', 'warning_level=2' ])
+else
+  project('dxvk', ['c', 'cpp'], version : 'v2.4.1', meson_version : '>= 0.58', default_options : [ 'cpp_std=c++17', 'warning_level=2' ])
+endif
 
 pkg = import('pkgconfig')
 cpu_family = target_machine.cpu_family()
 platform   = target_machine.system()
 fs = import('fs')
 
-cpp = meson.get_compiler('cpp')
-cc = meson.get_compiler('c')
-dxvk_is_msvc = cpp.get_argument_syntax() == 'msvc'
-
 compiler_args = [
-  '-msse',
+     '-msse',
   '-msse2',
   '-msse3',
   '-mfpmath=sse',
