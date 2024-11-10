@@ -52,7 +52,6 @@ jobs:
           | % { , ($_ -Split '=', 2) } `
           | % { [System.Environment]::SetEnvironmentVariable($_[0], $_[1]) }
         meson --buildtype release --backend vs2022 build-msvc-x86
-        Get-Content -Path .\version.h
         msbuild -m build-msvc-x86/dxvk.sln
         Get-Content -Path .\version.h
 
