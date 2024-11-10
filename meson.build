@@ -15,6 +15,7 @@ if not dxvk_is_msvc
   '-Wall',
   '-Wextra',
 ]
+endif
 
 compiler_args += [
   '-msse',
