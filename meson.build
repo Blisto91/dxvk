@@ -8,14 +8,19 @@ fs = import('fs')
 cpp = meson.get_compiler('cpp')
 cc = meson.get_compiler('c')
 dxvk_is_msvc = cpp.get_argument_syntax() == 'msvc'
+compiler_args = []
 
-compiler_args = [
+if not dxvk_is_msvc
+  compiler_args += [
+  '-Wall',
+  '-Wextra',
+]
+
+compiler_args += [
   '-msse',
   '-msse2',
   '-msse3',
   '-mfpmath=sse',
-  '-Wall',
-  '-Wextra',
   '-Wimplicit-fallthrough',
   # gcc
   '-Wno-missing-field-initializers',
