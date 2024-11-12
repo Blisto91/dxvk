@@ -209,7 +209,7 @@ build_type = get_option('buildtype')
 
 if build_type == 'plain'
   build_type += '( '
-  build_type += get_option('cpp_args')
+  build_type += ' '.join(get_option('cpp_args'))
   build_type += ' )' 
 endif
 
