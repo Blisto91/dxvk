@@ -213,6 +213,8 @@ if build_type == 'plain'
   build_type += ' )' 
 endif
 
+message(build_type)
+
 conf_data = configuration_data()
 conf_data.set('BUILD_COMPILER', cpp.get_id())
 conf_data.set('BUILD_COMPILER_VERSION', cpp.version())
