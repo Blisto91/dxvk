@@ -205,10 +205,19 @@ dxvk_version = vcs_tag(
   output: 'version.h',
 )
 
+build_type = get_option('buildtype')
+
+if build_type == 'plain'
+  build_type += '( '
+  ext_args = get_option('cpp_args')
+  build_type += ' )' 
+endif
+
 conf_data = configuration_data()
 conf_data.set('BUILD_COMPILER', cpp.get_id())
 conf_data.set('BUILD_COMPILER_VERSION', cpp.version())
 conf_data.set('BUILD_TARGET', cpu_family)
+conf_data.set('BUILD_TYPE', build_type)
 dxvk_buildenv = configure_file(
   configuration : conf_data,
   input:  'buildenv.h.in',
