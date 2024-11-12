@@ -209,7 +209,7 @@ build_type = get_option('buildtype')
 
 if build_type == 'plain'
   build_type += '( '
-  ext_args = get_option('cpp_args')
+  build_type += get_option('cpp_args')
   build_type += ' )' 
 endif
 
