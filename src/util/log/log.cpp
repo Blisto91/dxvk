@@ -75,7 +75,7 @@ namespace dxvk {
         //outstream << prefix << line << std::endl;
 
         std::string adjusted;
-        std::cerr << line;
+        std::cerr << "bla";
         if (!adjusted.empty()) {
 #ifdef _WIN32
           if (m_wineLogOutput) {
