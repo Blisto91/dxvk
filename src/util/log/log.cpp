@@ -71,11 +71,11 @@ namespace dxvk {
       std::string line;
 
       while (std::getline(stream, line, '\n')) {
-        std::stringstream outstream;
-        outstream << "bla";
+        //std::stringstream outstream;
+        //outstream << prefix << line << std::endl;
 
-        std::string adjusted = outstream.str();
-
+        //std::string adjusted = outstream.str();
+        std::cerr << line;
         if (!adjusted.empty()) {
 #ifdef _WIN32
           if (m_wineLogOutput) {
@@ -102,7 +102,7 @@ namespace dxvk {
               }
             }
           } else {
-            std::cerr << adjusted;
+           // std::cerr << adjusted;
           }
 #else
           std::cerr << adjusted;
