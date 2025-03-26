@@ -74,7 +74,7 @@ namespace dxvk {
         //std::stringstream outstream;
         //outstream << prefix << line << std::endl;
 
-        //std::string adjusted = outstream.str();
+        std::string adjusted;
         std::cerr << line;
         if (!adjusted.empty()) {
 #ifdef _WIN32
