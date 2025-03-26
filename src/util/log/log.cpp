@@ -46,7 +46,7 @@ namespace dxvk {
   
   
   void Logger::emitMsg(LogLevel level, const std::string& message) {
-    /*if (level >= m_minLevel) {
+    if (level >= m_minLevel) {
       std::lock_guard<dxvk::mutex> lock(m_mutex);
       
       static std::array<const char*, 5> s_prefixes
@@ -78,7 +78,7 @@ namespace dxvk {
 
         if (!adjusted.empty()) {
 #ifdef _WIN32
-          if (m_wineLogOutput) {
+          /*if (m_wineLogOutput) {
             // __wine_dbg_output tries to buffer lines up to 1020 characters
             // including null terminator, and will cause a hang if we submit
             // anything longer than that even in consecutive calls. Work
@@ -103,7 +103,7 @@ namespace dxvk {
             }
           } else {
             std::cerr << adjusted;
-          }
+          }*/
 #else
           std::cerr << adjusted;
 #endif
@@ -112,7 +112,7 @@ namespace dxvk {
         if (m_fileStream)
           m_fileStream << adjusted;
       }
-    }*/
+    }
   }
   
   
