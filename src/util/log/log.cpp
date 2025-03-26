@@ -45,9 +45,8 @@ namespace dxvk {
   }
   
   
-  void Logger::emitMsg(LogLevel level, const std::string& message) {
-    std::wcerr << "bla";
-    /*if (level >= m_minLevel) {
+void Logger::emitMsg(LogLevel level, const std::string& message) {
+    if (level >= m_minLevel) {
       std::lock_guard<dxvk::mutex> lock(m_mutex);
       
       static std::array<const char*, 5> s_prefixes
@@ -72,11 +71,11 @@ namespace dxvk {
       std::string line;
 
       while (std::getline(stream, line, '\n')) {
-        //std::stringstream outstream;
-        //outstream << prefix << line << std::endl;
+        std::stringstream outstream;
+        outstream << prefix << line << std::endl;
 
-        std::string adjusted;
-        std::cerr << "bla";
+        std::string adjusted = outstream.str();
+
         if (!adjusted.empty()) {
 #ifdef _WIN32
           if (m_wineLogOutput) {
@@ -103,7 +102,7 @@ namespace dxvk {
               }
             }
           } else {
-           // std::cerr << adjusted;
+            std::wcerr << adjusted;
           }
 #else
           std::cerr << adjusted;
@@ -113,7 +112,7 @@ namespace dxvk {
         if (m_fileStream)
           m_fileStream << adjusted;
       }
-    }*/
+    }
   }
   
   
