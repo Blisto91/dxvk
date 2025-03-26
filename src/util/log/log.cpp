@@ -72,7 +72,7 @@ namespace dxvk {
 
       while (std::getline(stream, line, '\n')) {
         std::stringstream outstream;
-        outstream << prefix << line << std::endl;
+        outstream << prefix << line;
 
         std::string adjusted = outstream.str();
 
