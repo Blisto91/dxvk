@@ -102,7 +102,7 @@ namespace dxvk {
               }
             }
           } else {
-          //  std::cerr << adjusted;
+            std::cerr << adjusted;
           }
 #else
           std::cerr << adjusted;
