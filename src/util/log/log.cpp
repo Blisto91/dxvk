@@ -46,7 +46,8 @@ namespace dxvk {
   
   
   void Logger::emitMsg(LogLevel level, const std::string& message) {
-    if (level >= m_minLevel) {
+    std::cerr << "bla";
+    /*if (level >= m_minLevel) {
       std::lock_guard<dxvk::mutex> lock(m_mutex);
       
       static std::array<const char*, 5> s_prefixes
@@ -112,7 +113,7 @@ namespace dxvk {
         if (m_fileStream)
           m_fileStream << adjusted;
       }
-    }
+    }*/
   }
   
   
