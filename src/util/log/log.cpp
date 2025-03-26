@@ -46,7 +46,7 @@ namespace dxvk {
   
   
   void Logger::emitMsg(LogLevel level, const std::string& message) {
-    std::cout << "bla";
+    std::clog << "bla";
     /*if (level >= m_minLevel) {
       std::lock_guard<dxvk::mutex> lock(m_mutex);
       
