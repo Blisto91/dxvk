@@ -92,9 +92,9 @@ function package {
 if [ $opt_32_only -eq 0 ]; then
   build_arch 64 lib
 fi
-if [ $opt_64_only -eq 0 ]; then
-  build_arch 32 lib32
-fi
+#if [ $opt_64_only -eq 0 ]; then
+#  build_arch 32 lib32
+#fi
 
 if [ $opt_nopackage -eq 0 ]; then
   package
