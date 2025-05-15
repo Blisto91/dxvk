@@ -192,6 +192,7 @@ namespace dxvk::hud {
       m_frameRate = str::format(fps / 10, ".", fps % 10);
       m_frameCount = 0;
       m_lastUpdate = time;
+      std::cout << m_frameRate;
     }
   }
 
