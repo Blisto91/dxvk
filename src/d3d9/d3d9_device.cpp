@@ -1314,7 +1314,7 @@ namespace dxvk {
     // Copies would only work if the extents match. (ie. no stretching)
     bool stretch = srcCopyExtent != dstCopyExtent;
 
-    bool dstHasRTUsage = (dstTextureInfo->Desc()->Usage & (D3DUSAGE_RENDERTARGET | D3DUSAGE_DEPTHSTENCIL)) != 0;
+    bool dstHasAttachmentUsage = (dstTextureInfo->Desc()->Usage & (D3DUSAGE_RENDERTARGET | D3DUSAGE_DEPTHSTENCIL)) != 0;
     bool dstIsSurface = dstTextureInfo->GetType() == D3DRTYPE_SURFACE;
     if (stretch) {
       if (unlikely(pSourceSurface == pDestSurface))
@@ -1326,17 +1326,25 @@ namespace dxvk {
       // The docs say that stretching is only allowed if the destination is either a render target surface or a render target texture.
       // However in practice, using an offscreen plain surface in D3DPOOL_DEFAULT as the destination works fine.
       // Using a texture without USAGE_RENDERTARGET as destination however does not.
-      if (unlikely(!dstIsSurface && !dstHasRTUsage))
+      if (unlikely(!dstIsSurface && !dstHasAttachmentUsage))
         return D3DERR_INVALIDCALL;
     } else {
       bool srcIsSurface = srcTextureInfo->GetType() == D3DRTYPE_SURFACE;
-      bool srcHasRTUsage = (srcTextureInfo->Desc()->Usage & (D3DUSAGE_RENDERTARGET | D3DUSAGE_DEPTHSTENCIL)) != 0;
+      bool srcHasAttachmentUsage = (srcTextureInfo->Desc()->Usage & (D3DUSAGE_RENDERTARGET | D3DUSAGE_DEPTHSTENCIL)) != 0;
+
+      // D3D9Ex allows StretchRect to regular (non-RT) textures if it is a simple copy.
+      bool isCopy = IsExtended()
+        && pSourceRect == nullptr && pDestRect == nullptr // Yes, the rects have to be null. Even passing a rect that is the same size as the texture is invalid.
+        && srcTextureInfo->Desc()->Pool == D3DPOOL_DEFAULT
+        && dstTextureInfo->Desc()->Pool == D3DPOOL_DEFAULT
+        && srcTextureInfo->Desc()->Format == dstTextureInfo->Desc()->Format;
+
       // Non-stretching copies are only allowed if:
       // - the destination is either a render target surface or a render target texture
       // - both destination and source are depth stencil surfaces
       // - both destination and source are offscreen plain surfaces.
       // The only way to get a surface with resource type D3DRTYPE_SURFACE without USAGE_RT or USAGE_DS is CreateOffscreenPlainSurface.
-      if (unlikely((!dstHasRTUsage && (!dstIsSurface || !srcIsSurface || srcHasRTUsage)) && !m_isD3D8Compatible))
+      if (unlikely((!dstHasAttachmentUsage && (!dstIsSurface || !srcIsSurface || srcHasAttachmentUsage)) && !m_isD3D8Compatible && !isCopy))
         return D3DERR_INVALIDCALL;
     }
 
@@ -1660,6 +1668,9 @@ namespace dxvk {
     if (m_state.renderTargets[RenderTargetIndex] == rt)
       return D3D_OK;
 
+    const bool wasAtocEnabled = IsAlphaToCoverageEnabled();
+    const bool wasAlphaTestEnabled = IsAlphaTestEnabled();
+
     // Do a strong flush if the first render target is changed.
     ConsiderFlush(RenderTargetIndex == 0
       ? GpuFlushType::ImplicitStrongHint
@@ -1689,15 +1700,22 @@ namespace dxvk {
       m_flags.set(D3D9DeviceFlag::DirtyBlendState);
 
     if (RenderTargetIndex == 0) {
+      // Changing RT0 can disable ATOC and
+      // potentially enable alpha test, so we
+      // need to keep track of the state.
+      const bool isAtocEnabled = IsAlphaToCoverageEnabled();
+      const bool isAlphaTestEnabled = IsAlphaTestEnabled();
+
       if (likely(texInfo != nullptr)) {
-        if (IsAlphaTestEnabled()) {
-          // Need to recalculate the precision.
+        if (isAlphaTestEnabled || wasAlphaTestEnabled) {
+          // We either need to enable or disable it based on the changed ATOC state
+          // or we need to recalculate the precision.
           m_flags.set(D3D9DeviceFlag::DirtyAlphaTestState);
         }
 
         bool validSampleMask = texInfo->Desc()->MultiSample > D3DMULTISAMPLE_NONMASKABLE;
 
-        if (validSampleMask != m_flags.test(D3D9DeviceFlag::ValidSampleMask)) {
+        if (validSampleMask != m_flags.test(D3D9DeviceFlag::ValidSampleMask) || isAtocEnabled != wasAtocEnabled) {
           m_flags.clr(D3D9DeviceFlag::ValidSampleMask);
           if (validSampleMask)
             m_flags.set(D3D9DeviceFlag::ValidSampleMask);
@@ -1707,6 +1725,7 @@ namespace dxvk {
       } else {
         m_flags.clr(D3D9DeviceFlag::ValidSampleMask);
         m_flags.set(D3D9DeviceFlag::DirtyMultiSampleState);
+        m_flags.set(D3D9DeviceFlag::DirtyAlphaTestState);
       }
     }
 
