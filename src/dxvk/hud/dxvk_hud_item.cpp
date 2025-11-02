@@ -243,7 +243,7 @@ namespace dxvk::hud {
     HudPos maxPos = { 162, -128 };
 
     HudPos graphPos = { 8, -120 };
-    HudPos graphSize = { 0, 100 };
+    HudPos graphSize = { NumDataPoints, 80 };
 
     uint32_t dataPoint = m_nextDataPoint++;
 
