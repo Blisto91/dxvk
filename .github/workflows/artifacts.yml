@@ -15,7 +15,7 @@ jobs:
         fetch-depth: 0
 
     - name: Setup problem matcher
-      uses: Joshua-Ashton/gcc-problem-matcher@master
+      uses: Blisto91/gcc-problem-matcher@test
 
     - name: Build release
       id: build-release
@@ -49,7 +49,7 @@ jobs:
         fetch-depth: 0
 
     - name: Setup problem matcher
-      uses: Joshua-Ashton/gcc-problem-matcher@master
+      uses: Blisto91/gcc-problem-matcher@test
 
     - name: Build release
       id: build-release
