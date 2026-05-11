@@ -24,11 +24,12 @@ jobs:
       uses: Joshua-Ashton/arch-mingw-github-action@v8
       with:
         command: |
+          echo pwd
+          pwd
+          echo "${{ github.workspace }}"
           export VERSION_NAME="${GITHUB_REF##*/}-${GITHUB_SHA##*/}"
           ./package-release.sh ${VERSION_NAME} build --no-package
           echo "VERSION_NAME=${VERSION_NAME}" >> $GITHUB_ENV
-          echo pwd
-          pwd
 
     - name: Upload artifacts
       id: upload-artifacts
