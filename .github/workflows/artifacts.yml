@@ -15,9 +15,9 @@ jobs:
         fetch-depth: 0
 
     - name: Setup problem matcher
-      uses: Blisto91/gcc-problem-matcher-improved@main
+      uses: Blisto91/gcc-problem-matcher-improved@test
       with:
-        build-directory: "/github/workspace/build/"
+        skip-directories: "subprojects"
 
     - name: Build release
       id: build-release
