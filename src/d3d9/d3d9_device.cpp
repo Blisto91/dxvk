@@ -67,6 +67,8 @@ namespace dxvk {
 
     InitShaderOptions();
 
+    bool frog = true;
+      
     // If we can SWVP, then we use an extended constant set
     // as SWVP has many more slots available than HWVP.
     bool canSWVP = CanSWVP();
