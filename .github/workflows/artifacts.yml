@@ -15,7 +15,9 @@ jobs:
         fetch-depth: 0
 
     - name: Setup problem matcher
-      uses: Blisto91/gcc-problem-matcher@test
+      uses: Blisto91/gcc-problem-matcher-improved@main
+      with:
+        build-directory: "${{ github.workspace }}/build/"
 
     - name: Build release
       id: build-release
@@ -49,7 +51,9 @@ jobs:
         fetch-depth: 0
 
     - name: Setup problem matcher
-      uses: Blisto91/gcc-problem-matcher@test
+      uses: Blisto91/gcc-problem-matcher-improved@main
+      with:
+        build-directory: "${{ github.workspace }}/build/"
 
     - name: Build release
       id: build-release
