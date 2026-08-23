@@ -16,6 +16,8 @@ jobs:
 
     - name: Setup problem matcher
       uses: Blisto91/gcc-problem-matcher-improved@test
+      with:
+        skip-directories: subprojects
 
     - name: Build release
       id: build-release
