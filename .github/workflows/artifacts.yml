@@ -16,6 +16,10 @@ jobs:
 
     - name: Setup problem matcher
       uses: Blisto91/gcc-problem-matcher-improved@test
+      with:
+        skip-directories: |
+          subprojects
+          d3d9
 
     - name: Build release
       id: build-release
