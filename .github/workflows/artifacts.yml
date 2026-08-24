@@ -19,7 +19,7 @@ jobs:
       with:
         skip-directories: |
           subprojects
-          src/d3d9
+          /src/d3d9/
 
     - name: Build release
       id: build-release
