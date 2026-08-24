@@ -21,7 +21,7 @@ jobs:
 
     - name: Build release
       id: build-release
-      uses: WinterSnowfall/arch-mingw-github-action@v1
+      uses: WinterSnowfall/arch-mingw-github-action@v2
       with:
         command: |
           echo pwd
