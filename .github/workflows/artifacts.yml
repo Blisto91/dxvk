@@ -25,3 +25,28 @@ jobs:
           export VERSION_NAME="${GITHUB_REF##*/}-${GITHUB_SHA##*/}"
           ./package-release.sh ${VERSION_NAME} build --no-package
           echo "VERSION_NAME=${VERSION_NAME}" >> $GITHUB_ENV
+
+  artifacts-steamrt-sniper:
+    runs-on: ubuntu-latest
+    container: 
+      image: registry.gitlab.steamos.cloud/steamrt/sniper/sdk:beta
+      options: --user 1001
+
+    steps:
+    - name: Checkout code
+      id: checkout-code
+      uses: actions/checkout@v6
+      with:
+        submodules: recursive
+        fetch-depth: 0
+
+    - name: Setup problem matcher
+      uses: Blisto91/problem-matcher-testing/@main
+
+    - name: Build release
+      id: build-release
+      shell: bash
+      run: |
+        export VERSION_NAME="${GITHUB_REF##*/}-${GITHUB_SHA##*/}"
+        ./package-native.sh ${VERSION_NAME} build
+        echo "VERSION_NAME=${VERSION_NAME}" >> $GITHUB_ENV
