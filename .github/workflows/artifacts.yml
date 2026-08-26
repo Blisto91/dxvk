@@ -19,7 +19,9 @@ jobs:
 
     - name: Build release
       id: build-release
-      run: |
-        export VERSION_NAME="${GITHUB_REF##*/}-${GITHUB_SHA##*/}"
-        ./package-release.sh ${VERSION_NAME} build --no-package
-        echo "VERSION_NAME=${VERSION_NAME}" >> $GITHUB_ENV
+      uses: WinterSnowfall/arch-mingw-github-action@v2
+      with:
+        command: |
+          export VERSION_NAME="${GITHUB_REF##*/}-${GITHUB_SHA##*/}"
+          ./package-release.sh ${VERSION_NAME} build --no-package
+          echo "VERSION_NAME=${VERSION_NAME}" >> $GITHUB_ENV
