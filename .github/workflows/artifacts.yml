@@ -16,6 +16,8 @@ jobs:
 
     - name: Setup problem matcher
       uses: Blisto91/problem-matcher-testing/@main
+      with:
+        use-compiled-binary: true
 
     - name: Build release
       id: build-release
