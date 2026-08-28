@@ -2,11 +2,6 @@ name: Artifacts (Package)
 
 on: [push, pull_request, workflow_dispatch]
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.sha }}
-  cancel-in-progress: true
-
-
 jobs:
   artifacts-steamrt-sniper:
     if: github.event_name == 'pull_request' || github.head_ref == ''
