@@ -19,8 +19,8 @@ jobs:
       with:
         skip-directories: |
           "subprojects
-          frog
-           æøå "
+          where/the/frogs/hide
+          /hiddendir/"
 
     - name: Build release
       id: build-release
