@@ -13,6 +13,7 @@ jobs:
 
     - name: git gud
       run: |
+        cat /etc/passwd
         USER root
         apt-get update
         apt-get install -y git
