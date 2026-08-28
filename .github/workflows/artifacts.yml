@@ -31,5 +31,5 @@ jobs:
       shell: bash
       run: |
         export VERSION_NAME="${GITHUB_REF##*/}-${GITHUB_SHA##*/}"
-        ./package-native.sh ${VERSION_NAME} build
+        ./package-native.sh ${VERSION_NAME} build --64-only
         echo "VERSION_NAME=${VERSION_NAME}" >> $GITHUB_ENV
