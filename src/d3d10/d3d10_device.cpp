@@ -94,6 +94,8 @@ namespace dxvk {
           ID3D10Buffer**                    ppBuffer) {
     InitReturnPtr(ppBuffer);
 
+    bool frog = true;
+    
     if (pDesc == nullptr)
       return E_INVALIDARG;
 
