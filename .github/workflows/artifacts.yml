@@ -4,41 +4,17 @@ on: [push, pull_request, workflow_dispatch]
 
 
 jobs:
-  check-sha:
-    runs-on: ubuntu-latest
-    outputs:
-      should_skip: ${{ steps.check.outputs.should_skip }}
-    steps:
-      - id: check
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          if [ "${{ github.event_name }}" = "push" ]; then
-            PR_COUNT=$(gh api repos/${{ github.repository }}/commits/${{ github.sha }}/pulls --jq 'length')
-            if [ "$PR_COUNT" -gt 0 ]; then
-              echo "should_skip=true" >> $GITHUB_OUTPUT
-              exit 0
-            fi
-          fi
-          echo "should_skip=false" >> $GITHUB_OUTPUT
-
-
   artifacts-steamrt-sniper:
-    needs: check-sha
-    if: needs.check-sha.outputs.should_skip != 'true'
     runs-on: ubuntu-latest
     container: 
       image: registry.gitlab.steamos.cloud/steamrt/sniper/sdk:beta
-
 
     steps:
     - name: Setup problem matcher
       uses: Blisto91/problem-matcher-testing/@main
       with:
-        skip-directories: |
-          "subprojects
-          frog
-           æøå "
+        runtime-compile: true
+        skip-directories: "subprojects"
       
     - name: Checkout code
       id: checkout-code
