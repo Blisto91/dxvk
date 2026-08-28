@@ -4,10 +4,7 @@ on: [push, pull_request, workflow_dispatch]
 
 jobs:
   artifacts-steamrt-sniper:
-    if: |
-      github.event_name == 'pull_request' || 
-      (github.event_name == 'push' && github.event.head_commit.id != '') && 
-      (github.event_name == 'push' && !contains(github.ref, 'refs/pull/'))
+    if: github.event_name == 'pull_request' || github.head_ref == ''
     runs-on: ubuntu-latest
     container: 
       image: registry.gitlab.steamos.cloud/steamrt/sniper/sdk:beta
