@@ -13,7 +13,6 @@ jobs:
     - name: Setup problem matcher
       uses: Blisto91/problem-matcher-testing/@main
       with:
-        runtime-compile: true
         skip-directories: "subprojects"
       
     - name: Checkout code
