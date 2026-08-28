@@ -13,8 +13,10 @@ jobs:
 
     - name: git gud
       run: |
+        USER root
         apt-get update
         apt-get install -y git
+        USER 1001
     
     - name: Checkout code
       id: checkout-code
