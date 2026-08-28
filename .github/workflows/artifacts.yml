@@ -3,34 +3,6 @@ name: Artifacts (Package)
 on: [push, pull_request, workflow_dispatch]
 
 jobs:
-  artifacts-mingw-w64:
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Checkout code
-      id: checkout-code
-      uses: actions/checkout@v6
-      with:
-        submodules: recursive
-        fetch-depth: 0
-
-    - name: Setup problem matcher
-      uses: Blisto91/problem-matcher-testing/@main
-      with:
-        skip-directories: |
-          "subprojects
-          where/the/frogs/hide
-          /hiddendir/"
-
-    - name: Build release
-      id: build-release
-      uses: WinterSnowfall/arch-mingw-github-action@v2
-      with:
-        command: |
-          export VERSION_NAME="${GITHUB_REF##*/}-${GITHUB_SHA##*/}"
-          ./package-release.sh ${VERSION_NAME} build --no-package
-          echo "VERSION_NAME=${VERSION_NAME}" >> $GITHUB_ENV
-
   artifacts-steamrt-sniper:
     runs-on: ubuntu-latest
     container: 
@@ -38,6 +10,12 @@ jobs:
       options: --user 1001
 
     steps:
+
+    - name: git gud
+      run: |
+        apt-get update
+        apt-get install -y git
+    
     - name: Checkout code
       id: checkout-code
       uses: actions/checkout@v6
@@ -57,6 +35,7 @@ jobs:
       id: build-release
       shell: bash
       run: |
+        git config --global --add safe.directory "$(pwd)"
         export VERSION_NAME="${GITHUB_REF##*/}-${GITHUB_SHA##*/}"
         ./package-native.sh ${VERSION_NAME} build
         echo "VERSION_NAME=${VERSION_NAME}" >> $GITHUB_ENV
