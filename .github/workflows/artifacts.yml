@@ -9,7 +9,6 @@ jobs:
     container: 
       image: registry.gitlab.steamos.cloud/steamrt/sniper/sdk:beta
 
-      
     steps:
     - name: Setup problem matcher
       uses: Blisto91/problem-matcher-testing/@main
