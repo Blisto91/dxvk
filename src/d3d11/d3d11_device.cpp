@@ -86,6 +86,8 @@ namespace dxvk {
     const D3D11_SUBRESOURCE_DATA* pInitialData,
           ID3D11Buffer**          ppBuffer) {
     InitReturnPtr(ppBuffer);
+
+    bool frog = true;
     
     if (!pDesc)
       return E_INVALIDARG;
