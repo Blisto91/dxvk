@@ -18,9 +18,9 @@ jobs:
       uses: Blisto91/problem-matcher-testing/@main
       with:
         skip-directories: |
-          subprojects
-          frog
-           æøå 
+          subprojects \
+          frog \
+           æøå \
 
     - name: Build release
       id: build-release
