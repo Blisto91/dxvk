@@ -7,21 +7,10 @@ jobs:
     runs-on: ubuntu-latest
     container: 
       image: registry.gitlab.steamos.cloud/steamrt/sniper/sdk:beta
-
+      
     steps:
 
-    - name: git gud
-      run: |
-        apt-get update
-        apt-get install -y git
     
-    - name: Checkout code
-      id: checkout-code
-      uses: actions/checkout@v6
-      with:
-        submodules: recursive
-        fetch-depth: 0
-
     - name: Setup problem matcher
       uses: Blisto91/problem-matcher-testing/@main
       with:
@@ -29,12 +18,18 @@ jobs:
           "subprojects
           frog
            æøå "
+      
+    - name: Checkout code
+      id: checkout-code
+      uses: actions/checkout@v6
+      with:
+        submodules: recursive
+        fetch-depth: 0
 
     - name: Build release
       id: build-release
       shell: bash
       run: |
-        git config --global --add safe.directory "$(pwd)"
         export VERSION_NAME="${GITHUB_REF##*/}-${GITHUB_SHA##*/}"
         ./package-native.sh ${VERSION_NAME} build
         echo "VERSION_NAME=${VERSION_NAME}" >> $GITHUB_ENV
