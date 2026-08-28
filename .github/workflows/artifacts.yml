@@ -9,6 +9,7 @@ concurrency:
 
 jobs:
   artifacts-steamrt-sniper:
+    if: github.event_name == 'pull_request' || github.head_ref == ''
     runs-on: ubuntu-latest
     container: 
       image: registry.gitlab.steamos.cloud/steamrt/sniper/sdk:beta
