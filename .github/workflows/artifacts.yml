@@ -2,8 +2,6 @@ name: Artifacts (Package)
 
 on: [push, pull_request, workflow_dispatch]
 
-
-
 jobs:
   artifacts-steamrt-sniper:
     runs-on: ubuntu-latest
