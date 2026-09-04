@@ -58,7 +58,7 @@ jobs:
       shell: bash
       run: |
         export VERSION_NAME="${GITHUB_REF##*/}-${GITHUB_SHA##*/}"
-        ./package-native.sh ${VERSION_NAME} build
+        ./package-native.sh sniper-${VERSION_NAME} build
         echo "VERSION_NAME=${VERSION_NAME}" >> $GITHUB_ENV
 
     - name: Upload artifacts
@@ -91,7 +91,7 @@ jobs:
       shell: bash
       run: |
         export VERSION_NAME="${GITHUB_REF##*/}-${GITHUB_SHA##*/}"
-        ./package-native.sh ${VERSION_NAME} build
+        ./package-native.sh steamrt4-${VERSION_NAME} build
         echo "VERSION_NAME=${VERSION_NAME}" >> $GITHUB_ENV
 
     - name: Upload artifacts
