@@ -6,6 +6,8 @@ jobs:
   artifacts-mingw-w64:
     runs-on: ubuntu-latest
     container: archlinux/archlinux:base-devel
+    env:
+      SUDO_UID: 1000
 
     steps:
     - name: Install dependencies
