@@ -5,21 +5,23 @@ on: [push, pull_request, workflow_dispatch]
 jobs:
   artifacts-mingw-w64:
     runs-on: ubuntu-latest
+    container: 
+      image: archlinux/archlinux:base-devel
+      options: --user 1001
 
     steps:
+    - name: Install dependencies
+      run: pacman -Syu --needed --noconfirm git meson mingw-w64-gcc glslang
+    
     - name: Checkout code
       id: checkout-code
       uses: actions/checkout@v6
       with:
         submodules: recursive
         fetch-depth: 0
-        
-    - name: test
-      uses: WinterSnowfall/arch-mingw-github-action@master
-      with:
-        command: | 
-          id
-          ls -l
+
+    - run: id
+    - run: ls -l
 
     - name: Setup problem matcher
       uses: Joshua-Ashton/gcc-problem-matcher@master
