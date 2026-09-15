@@ -9,7 +9,7 @@ jobs:
 
     steps:
     - name: Install dependencies
-      run: pacman -Syu --needed --noconfirm git meson mingw-w64-gcc glslang docker
+      run: pacman -Syu --needed --noconfirm git meson mingw-w64-gcc glslang
     
     - name: Checkout code
       id: checkout-code
@@ -20,7 +20,7 @@ jobs:
         
     - name: test
       run: | 
-        docker inspect $(docker ps -q) --format '{{.Config.User}} {{.Name}}'
+        cat /etc/passwd
         git config --global --add safe.directory "$GITHUB_WORKSPACE"
         git describe --dirty=+
 
