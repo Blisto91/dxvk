@@ -6,8 +6,6 @@ jobs:
   artifacts-mingw-w64:
     runs-on: ubuntu-latest
     container: archlinux/archlinux:base-devel
-    env:
-      SUDO_UID: 1000
 
     steps:
     - name: Install dependencies
@@ -19,8 +17,11 @@ jobs:
       with:
         submodules: recursive
         fetch-depth: 0
-
-    - run: git describe --dirty=+
+        
+    - name: test
+      run: | 
+        git config --global --add safe.directory "$GITHUB_WORKSPACE"
+        git describe --dirty=+
 
     - name: Setup problem matcher
       uses: Joshua-Ashton/gcc-problem-matcher@master
