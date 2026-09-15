@@ -11,7 +11,7 @@ jobs:
 
     steps:
     - name: Install dependencies
-      run: pacman -Syu --needed --noconfirm git meson mingw-w64-gcc glslang
+      run: sudo pacman -Syu --needed --noconfirm git meson mingw-w64-gcc glslang
     
     - name: Checkout code
       id: checkout-code
