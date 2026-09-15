@@ -15,7 +15,7 @@ jobs:
         fetch-depth: 0
         
     - name: test
-      uses: WinterSnowfall/arch-mingw-github-action@v2
+      uses: WinterSnowfall/arch-mingw-github-action@master
       with:
         command: | 
           id
