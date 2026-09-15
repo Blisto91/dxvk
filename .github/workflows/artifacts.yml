@@ -10,6 +10,10 @@ jobs:
     steps:
     - name: Install dependencies
       run: pacman -Syu --needed --noconfirm git meson mingw-w64-gcc glslang
+
+    - run: |
+       echo $GITHUB_WORKSPACE
+       echo ${{ github.workspace }}
     
     - name: Checkout code
       id: checkout-code
@@ -18,7 +22,9 @@ jobs:
         submodules: recursive
         fetch-depth: 0
         
-    - run: ls -l
+    - run: |
+       echo $GITHUB_WORKSPACE
+       echo ${{ github.workspace }}
 
     - name: Setup problem matcher
       uses: Joshua-Ashton/gcc-problem-matcher@master
@@ -29,8 +35,6 @@ jobs:
         export VERSION_NAME="${GITHUB_REF##*/}-${GITHUB_SHA##*/}"
         ./package-release.sh ${VERSION_NAME} build --no-package --64-only
         echo "VERSION_NAME=${VERSION_NAME}" >> $GITHUB_ENV
-
-    - run: ls -l
 
     - name: Upload artifacts
       id: upload-artifacts
