@@ -18,6 +18,9 @@ jobs:
         submodules: recursive
         fetch-depth: 0
 
+    - run: id
+    - run: ls -l
+
     - name: Setup problem matcher
       uses: Joshua-Ashton/gcc-problem-matcher@master
 
