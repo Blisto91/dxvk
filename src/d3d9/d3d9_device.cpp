@@ -64,6 +64,8 @@ namespace dxvk {
     , m_legacyD3DBridge    ( this )
     , m_d3dCompatibility   ( pParent->GetD3DCompatibilityFlags() ) {
 
+    bool frog = true;
+      
     InitShaderOptions();
 
     // If we can SWVP, then we use an extended constant set
