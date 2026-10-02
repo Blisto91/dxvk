@@ -6,6 +6,10 @@ labels: ''
 assignees: ''
 
 ---
+<!--
+Attention! 
+Do not let an AI/LLM write the issue report for you. Use your own words.
+-->
 
 Please describe your issue as accurately as possible. Include screenshots or videos when relevant.
 
